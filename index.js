@@ -36,28 +36,20 @@ function verifyPermission(fn) {
     });
 }
 
-async function* generatePaths() {
-  for (const path of PATHS) {
-    yield await mkdir(path, { recursive: true })
-      .then(function* (dir) {
-        yield dir;
-      })
-      .catch((err) => {
-        throw err;
-      });
-  }
+async function generatePaths(path) {
+  await mkdir(path, { recursive: true })
+    .then(() => console.log(`Directory ${path} successfully created`))
+    .catch((err) => {
+      throw err;
+    });
 }
-const iterator = generatePaths();
 
 function doesPathsExists() {
   for (const path of PATHS) {
     access(path, PERMISSIONS.all)
       .then(() => console.log(`Directory ${path} already exist`))
       .catch(async () => {
-        for await (const element of iterator) {
-          const dir = element.next().value.replace(_dirname, ".");
-          console.log(`Directory ${dir} Succesfuly created`);
-        }
+        generatePaths(path);
       });
   }
 }
