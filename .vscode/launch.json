@@ -1,0 +1,59 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    // -------- Node.js (existing) --------
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Node.js Program",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/index.js"
+    },
+
+    // -------- JavaScript (Browser) --------
+    {
+      "type": "pwa-chrome", // or "chrome" if using Debugger for Chrome
+      "request": "launch",
+      "name": "Launch Chrome against localhost",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}"
+    },
+
+    // -------- C/C++ (using GDB) --------
+    {
+      "name": "Debug C/C++ (gdb)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/a.out", // Path to your compiled executable
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "build_cpp", // Optional: compile before debugging
+      "miDebuggerPath": "/usr/bin/gdb" // Adjust path for your OS
+    },
+
+    // -------- Bash Script --------
+    {
+      "type": "bash",
+      "request": "launch",
+      "name": "Debug Bash Script",
+      "program": "${workspaceFolder}/script.sh", // Path to your bash script
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "env": {},
+      "terminalKind": "integrated"
+    }
+  ]
+}
