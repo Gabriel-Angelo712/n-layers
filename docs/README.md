@@ -1,52 +1,131 @@
-# n-layers CLI
+# n-layers
 
-`n-layers` é uma ferramenta de linha de comando para criar a estrutura de diretórios padrão de um projeto em camadas (n-layers). Ela verifica se o caminho informado é um diretório válido, testa permissões de leitura e escrita e cria pastas que estejam faltando.
+**A simple CLI that scaffolds a clean n-layered architecture folder structure for your projects.**
 
-## Instalação
+Stop creating the same folders over and over.  
+With one command, `n-layers` sets up a professional and organized project structure based on the classic n-layers architecture.
 
-1. Certifique-se de ter o Node.js instalado.
-2. No diretório do projeto, instale as dependências locais ou torne a ferramenta executável globalmente:
+---
+
+## Features
+
+- Creates the standard n-layers directory structure
+- Checks if the target path is a valid directory
+- Verifies read/write permissions before creating folders
+- Idempotent — skips folders that already exist
+- Clear console feedback for every action
+- Zero external dependencies
+
+---
+
+## Installation
+
+### Global (recommended)
 
 ```bash
-npm install
+npm install -g n-layers
+
+
+### Local / development
+
+```bash
+git clone https://github.com/Gabriel-Angelo712/n-layers.git
+cd n-layers
 npm link
 ```
 
-## Uso
+> Requires **Node.js 18+**
 
-Execute a CLI informando o diretório onde a estrutura deve ser criada:
+---
+
+## Quick Start
 
 ```bash
+# Create the structure in the current directory
+n-layers ./
+
+# Create the structure in a specific folder
+n-layers ./my-project
+```
+
+---
+
+## Usage
+
+```bash
+n-layers <directory>
+```
+
+The first argument **must** be a path to an existing directory.
+
+### Example
+
+```bash
+mkdir my-app
+cd my-app
 n-layers ./
 ```
 
-O primeiro argumento deve ser um caminho para um diretório existente.
+---
 
-## Estrutura criada
+## Generated Structure
 
-A CLI garante que os seguintes diretórios existam, criando-os quando necessário:
+The CLI ensures the following directories exist (and creates them if they are missing):
 
-- `./src/entities`
-- `./src/factories`
-- `./src/services`
-- `./src/repositories`
-- `./src/utils`
-- `./docs`
-- `./database`
+```
+.
+├── src
+│   ├── entities
+│   ├── factories
+│   ├── services
+│   ├── repositories
+│   └── utils
+├── docs
+└── database
+```
 
-## Responsabilidades
+---
 
-- `Entities: objetos de domínio puros, sem dependências.`
-- `Repositories: abstraem a persistência (manipulação de banco de dados e APIs externas).`
-- `Services: orquestram as entidades e repositórios, contendo a lógica de negócio.`
-- `Factories: centralizam a criação de objetos complexos.`
-- `Utils: funções genéricas e reutilizáveis.`
+## Layer Responsibilities
 
-## Comportamento
+| Layer          | Responsibility                                                                 |
+|----------------|---------------------------------------------------------------------------------|
+| **Entities**   | Pure domain objects. No dependencies.                                           |
+| **Repositories** | Abstract data persistence (database, external APIs, file system, etc.)        |
+| **Services**   | Contain business logic. Orchestrate entities and repositories.                  |
+| **Factories**  | Centralize the creation of complex objects.                                     |
+| **Utils**      | Generic and reusable helper functions.                                          |
+| **docs**       | Project documentation.                                                          |
+| **database**   | Database-related files (migrations, schemas, seeds, etc.)                       |
 
-Ao executar a CLI:
+---
 
-- o caminho informado é verificado como diretório existente
-- são verificadas permissões de leitura e escrita
-- diretórios ausentes são criados automaticamente
-- mensagens de status são exibidas no console
+## Behavior
+
+When you run the CLI, it will:
+
+1. Validate that the given path is an existing directory
+2. Check read and write permissions
+3. Create any missing folders from the structure above
+4. Print clear status messages to the console
+
+If a folder already exists, it is simply skipped.
+
+---
+
+## Platform Notes
+
+- Currently the core logic relies on a Bash script, so it works best on **Linux** and **macOS**.
+- On Windows it may require WSL or Git Bash.
+
+---
+
+## Requirements
+
+- Node.js ≥ 18
+
+---
+
+## License
+
+MIT © 2026 Gabriel Ângelo
